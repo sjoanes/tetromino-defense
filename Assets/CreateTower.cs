@@ -17,6 +17,10 @@ public class CreateTower : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		if (Input.GetMouseButtonDown(0))
+			current_tower = null;
+		
 		if (current_tower != null) {
 			Vector3 mousePosition = Input.mousePosition;
 			mousePosition.z = 26;
@@ -27,5 +31,9 @@ public class CreateTower : MonoBehaviour {
 
 	void TaskOnClick() {
 		current_tower = GameObject.Instantiate<GameObject>(prefab_tower);
+	}
+
+	void OnMouseDown() {
+		current_tower = null;
 	}
 }

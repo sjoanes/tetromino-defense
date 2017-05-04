@@ -17,7 +17,6 @@ public class Tower : MonoBehaviour {
 	void OnTriggerStay (Collider col) {
 		if (col.gameObject.GetComponent("Siege")) {
 			((Siege)col.gameObject.GetComponent("Siege")).health -= 1;
-			Debug.Log(((Siege)col.gameObject.GetComponent("Siege")).health);
 
 			if (((Siege)col.gameObject.GetComponent("Siege")).health < 0) {
 				Destroy(col.gameObject);
