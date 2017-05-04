@@ -8,6 +8,7 @@ public class CreateTower : MonoBehaviour {
 	public GameObject prefab_tower;
 	public Button yourButton;
 	private GameObject current_tower;
+	private float cooldown = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -17,9 +18,17 @@ public class CreateTower : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-		if (Input.GetMouseButtonDown(0))
+		// place a tower
+		if (Input.GetMouseButtonDown (0) && current_tower != null) {
 			current_tower = null;
+			cooldown = Time.time;
+			yourButton.interactable = false;
+		}
+
+		// release cooldown
+		if (Time.time - cooldown > 3) {
+			yourButton.interactable = true;
+		}
 		
 		if (current_tower != null) {
 			Vector3 mousePosition = Input.mousePosition;
@@ -31,9 +40,5 @@ public class CreateTower : MonoBehaviour {
 
 	void TaskOnClick() {
 		current_tower = GameObject.Instantiate<GameObject>(prefab_tower);
-	}
-
-	void OnMouseDown() {
-		current_tower = null;
 	}
 }
