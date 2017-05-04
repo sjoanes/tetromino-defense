@@ -32,7 +32,7 @@ public class CreateTower : MonoBehaviour {
 		
 		if (current_tower != null) {
 			Vector3 mousePosition = Input.mousePosition;
-			mousePosition.z = 26;
+			mousePosition.z = 23;
 			mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
 			current_tower.transform.position = mousePosition;
 		}
