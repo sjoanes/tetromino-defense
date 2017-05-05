@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour {
 
+	public int damage;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -11,12 +13,12 @@ public class Tower : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
 	}
 
-	void OnTriggerStay (Collider col) {
+	void OnTriggerEnter (Collider col) {
+		Debug.Log ("lol");
 		if (col.gameObject.GetComponent("Siege")) {
-			((Siege)col.gameObject.GetComponent("Siege")).health -= 1;
+			((Siege)col.gameObject.GetComponent("Siege")).health -= damage;
 
 			if (((Siege)col.gameObject.GetComponent("Siege")).health < 0) {
 				Destroy(col.gameObject);
