@@ -20,7 +20,7 @@ public class CreateTower : MonoBehaviour {
 	private float cooldown = 0;
 	private const int ROWS = 10;
 	private const int COLS = 22;
-	private Transform[,] isOccupied = new Transform[ROWS,COLS];
+	private Transform[,] blocks = new Transform[ROWS,COLS];
 
 	// Use this for initialization
 	void Start () {
@@ -74,30 +74,43 @@ public class CreateTower : MonoBehaviour {
 		int row = (int)Math.Floor(block.position.z + 5);
 		int column = (int)Math.Floor(block.position.x + 11);
 
-		return isOccupied[row, column] != null;
+		return blocks[row, column] != null;
 	}
 
 	void placeBlock (Transform block) {
 		int row = (int)Math.Floor(block.position.z + 5);
 		int column = (int)Math.Floor(block.position.x + 11);
 
-		isOccupied[row, column] = block;
+		blocks[row, column] = block;
 	}
 
 	void clearLines() {
 		for (int i = 0; i < COLS; i++) {
 			bool isLineFull = true;
 			for (int k = 0; k < ROWS; k++) {
-				if (isOccupied [k, i] == null) {
+				if (blocks [k, i] == null) {
 					isLineFull = false;
 				}
 			}
 
 			if (isLineFull) {
 				for (int k = 0; k < ROWS; k++) {
-					GameObject.Destroy (isOccupied [k, i].gameObject);
-					isOccupied [k, i] = null;
+					GameObject.Destroy (blocks [k, i].gameObject);
+					blocks [k, i] = null;
 				}
+
+				slideLines (i + 1, COLS);
+				i--;
+			}
+		}
+	}
+
+	void slideLines(int fromIndex, int toIndex) {
+		for (int i = fromIndex; i < toIndex; i++) {
+			for (int k = 0; k < ROWS; k++) {
+				blocks[k, i - 1] = blocks [k, i];
+				if (blocks[k,i] != null)
+					blocks[k, i].position -= Vector3.right;
 			}
 		}
 	}
