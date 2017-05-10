@@ -20,7 +20,7 @@ public class CreateTower : MonoBehaviour {
 	private float cooldown = 0;
 	private const int ROWS = 10;
 	private const int COLS = 22;
-	private bool[,] isOccupied = new bool[ROWS,COLS];
+	private Transform[,] isOccupied = new Transform[ROWS,COLS];
 
 	// Use this for initialization
 	void Start () {
@@ -50,6 +50,8 @@ public class CreateTower : MonoBehaviour {
 				cooldown = Time.time;
 				yourButton.interactable = false;
 				current_tower = null;
+
+				clearLines ();
 			}
 		}
 
@@ -72,14 +74,32 @@ public class CreateTower : MonoBehaviour {
 		int row = (int)Math.Floor(block.position.z + 5);
 		int column = (int)Math.Floor(block.position.x + 11);
 
-		return isOccupied[row, column];
+		return isOccupied[row, column] != null;
 	}
 
 	void placeBlock (Transform block) {
 		int row = (int)Math.Floor(block.position.z + 5);
 		int column = (int)Math.Floor(block.position.x + 11);
 
-		isOccupied[row, column] = true;
+		isOccupied[row, column] = block;
+	}
+
+	void clearLines() {
+		for (int i = 0; i < COLS; i++) {
+			bool isLineFull = true;
+			for (int k = 0; k < ROWS; k++) {
+				if (isOccupied [k, i] == null) {
+					isLineFull = false;
+				}
+			}
+
+			if (isLineFull) {
+				for (int k = 0; k < ROWS; k++) {
+					GameObject.Destroy (isOccupied [k, i].gameObject);
+					isOccupied [k, i] = null;
+				}
+			}
+		}
 	}
 
 	void TaskOnClick() {
