@@ -16,7 +16,6 @@ public class Tower : MonoBehaviour {
 	}
 
 	void OnTriggerEnter (Collider col) {
-		Debug.Log ("lol");
 		if (col.gameObject.GetComponent("Siege")) {
 			((Siege)col.gameObject.GetComponent("Siege")).health -= damage;
 
