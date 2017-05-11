@@ -6,15 +6,6 @@ public class Tower : MonoBehaviour {
 
 	public double damage;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	}
-
 	void OnTriggerEnter (Collider col) {
 		if (col.gameObject.GetComponent("Siege")) {
 			Siege enemy = (Siege)col.gameObject.GetComponent ("Siege");

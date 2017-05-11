@@ -12,6 +12,6 @@ public class Globals : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		mu.text = multiplier + "";
+		mu.text = "DMG x" + multiplier;
 	}
 }
