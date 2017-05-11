@@ -14,8 +14,6 @@ public class CreateTower : MonoBehaviour {
 	public GameObject o_block;
 	public GameObject straight_block;
 
-	public Button yourButton;
-
 	private GameObject current_tower;
 	private float cooldown = 0;
 	private const int ROWS = 10;
@@ -24,8 +22,7 @@ public class CreateTower : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Button btn = yourButton.GetComponent<Button>();
-		btn.onClick.AddListener(TaskOnClick);
+		cooldown = Time.time;
 	}
 	
 	// Update is called once per frame
@@ -35,7 +32,7 @@ public class CreateTower : MonoBehaviour {
 			current_tower.transform.Rotate(0, 90, 0);
 		}
 		// place a tower
-		if (Input.GetMouseButtonDown (0) && current_tower != null) {
+		if ((Input.GetMouseButtonDown (0) || Input.GetKeyDown("space")) && current_tower != null) {
 			bool isObstructed = false;
 			foreach (Transform block in current_tower.transform) {
 				if (isBlockOccupied(block)) {
@@ -48,7 +45,6 @@ public class CreateTower : MonoBehaviour {
 					placeBlock (block);
 				}
 				cooldown = Time.time;
-				yourButton.interactable = false;
 				current_tower = null;
 
 				clearLines ();
@@ -56,8 +52,8 @@ public class CreateTower : MonoBehaviour {
 		}
 
 		// release cooldown
-		if (Time.time - cooldown > 1) {
-			yourButton.interactable = true;
+		if (Time.time - cooldown > 1 && current_tower == null) {
+			PickTower();
 		}
 		
 		if (current_tower != null) {
@@ -115,7 +111,7 @@ public class CreateTower : MonoBehaviour {
 		}
 	}
 
-	void TaskOnClick() {
+	void PickTower() {
 		float choose = UnityEngine.Random.value;
 		if (choose < 0.15F) {
 			current_tower = GameObject.Instantiate<GameObject> (t_block);  // %15
