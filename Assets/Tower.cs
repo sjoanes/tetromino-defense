@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour {
 
-	public int damage;
+	public double damage;
 
 	// Use this for initialization
 	void Start () {
@@ -17,9 +17,10 @@ public class Tower : MonoBehaviour {
 
 	void OnTriggerEnter (Collider col) {
 		if (col.gameObject.GetComponent("Siege")) {
-			((Siege)col.gameObject.GetComponent("Siege")).health -= damage;
+			Siege enemy = (Siege)col.gameObject.GetComponent ("Siege");
+			enemy.health -= Globals.multiplier;
 
-			if (((Siege)col.gameObject.GetComponent("Siege")).health < 0) {
+			if (enemy.health < 0) {
 				Destroy(col.gameObject);
 			}
 		}

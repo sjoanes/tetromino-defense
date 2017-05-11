@@ -4,11 +4,12 @@ using UnityEngine.AI;
 
 public class Siege : MonoBehaviour {
 
-	public int health;
+	public double health;
 	public Transform goal;
 
 	void Start () {
 		NavMeshAgent agent = GetComponent<NavMeshAgent>();
+		agent.speed = 0.5f;
 		agent.destination = goal.position; 
 	}
 }

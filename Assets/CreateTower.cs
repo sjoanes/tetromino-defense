@@ -95,6 +95,7 @@ public class CreateTower : MonoBehaviour {
 					blocks [k, i] = null;
 				}
 
+				Globals.multiplier += 0.2;
 				slideLines (i + 1, COLS);
 				i--;
 			}
